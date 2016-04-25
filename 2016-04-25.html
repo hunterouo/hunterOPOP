@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <link href="http://jqmdesigner.appspot.com/gk/lib/jquery.mobile/1.4.5/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css" />
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+    $(document).on("mobileinit", function () {
+      $.mobile.autoInitializePage = false;
+      $.mobile.hashListeningEnabled = false;
+    });
+
+    function mobileInitPage() {
+      $.mobile.hashListeningEnabled = true;
+      $.mobile.initializePage();
+    };
+  </script>
+  <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <!-- Uncomment the following to include cordova in your android project -->
+  <!--<script src="http://jqmdesigner.appspot.com/platforms/android/cordova.js"></script>-->
+  <!-- GK Loader use RequireJS to load module -->
+  <script src="http://requirejs.org/docs/release/2.1.11/minified/require.js"></script>
+  <!--Plug in GK-->
+  <script src="http://jqmdesigner.appspot.com/components/jquery.gk/jquery.gk.min.js"></script>
+  <!-- Load GK components -->
+  <script components="http://jqmdesigner.appspot.com/components/gk-ext/gk-text.html" callback="mobileInitPage" src="http://jqmdesigner.appspot.com/components/gk-loader/gk-loader.js"></script>
+  <!-- Export JS  -->
+  <script>
+    var pages = ['Page0', 'Page1', 'Page2'];
+    $(document).on('pageinit', '#Page0', function () {
+
+      $(document).on("swiperight", function () {
+        var pageId = $.mobile.activePage.attr('id');
+        var idx = pages.indexOf(pageId);
+        idx = idx - 1 < 0 ? pages.length - 1 : idx - 1;
+        $.mobile.changePage('#' + pages[idx], {
+          'transition': 'slide',
+          'reverse': true
+        });
+      });
+
+      $(document).on("swipeleft", function () {
+        var pageId = $.mobile.activePage.attr('id');
+        var idx = pages.indexOf(pageId);
+        idx = ++idx % pages.length;
+        $.mobile.changePage('#' + pages[idx], {
+          'transition': 'slide'
+        });
+      });
+
+    });
+  </script>
+  <title>EZo App</title>
+</head>
+
+<body gk-app>
+  <!-- Page: Page0  -->
+  <div id="Page0" data-role="page">
+    <div role="main" class="ui-content">
+      <h1 style="text-align:center; font-size:60px;">Page A</h1>
+      <h1 style="text-align:center" id="text0" is="gk-text">Text</h1>
+    </div>
+  </div>
+  <!-- Page: Page1  -->
+  <div id="Page1" data-role="page">
+    <div class="ui-content">
+      <h1 style="text-align:center; font-size:60px;">Page B</h1>
+      <h1 style="text-align:center" id="text1" is="gk-text">Text</h1>
+    </div>
+  </div>
+  <!-- Page: Page2  -->
+  <div id="Page2" data-role="page">
+    <div class="ui-content">
+      <h1 style="text-align:center; font-size:60px;">Page C</h1>
+      <h1 style="text-align:center" id="text2" is="gk-text">Text</h1>
+      <a style="center" id="Start" class="ui-btn">Start</a>
+    </div>
+  </div>
+</body>
+
+</html>
